@@ -1,6 +1,9 @@
 services:
-  test:
-    image: nginxdemos/hello
-    ports:
-      - "8080:80"
+  homeassistant:
+    container_name: home-assistant
+    image: homeassistant/home-assistant:2025.5.2
+    restart: on-failure
+    network_mode: host
+    environment:
+      - TZ=Europe/Helsinki
 

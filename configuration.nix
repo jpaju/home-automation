@@ -47,8 +47,20 @@
 
   networking.hostName = "home-automation";
   networking.networkmanager.enable = true;
-  networking.firewall.enable = true;
-  networking.firewall.allowedTCPPorts = [ 22 80 443 8080 ];
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = let
+      hass = 8123;
+      ssh = 22;
+      http = 80;
+      https = 443;
+    in [ ssh http https hass ];
+
+    allowedUDPPorts = let
+      ssdp = 1900;
+      mdns = 5353;
+    in [ ssdp mdns ];
+  };
 
   services.openssh = {
     enable = true;
@@ -94,7 +106,7 @@
 
   virtualisation.docker.enable = true;
 
-  systemd.services.docker-test = {
+  systemd.services.home-automation = {
     enable = true;
     path = [ pkgs.docker ];
     requires = [ "docker.service" ];
