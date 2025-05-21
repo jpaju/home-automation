@@ -94,6 +94,23 @@
 
   virtualisation.docker.enable = true;
 
+  systemd.services.docker-test = {
+    enable = true;
+    path = [ pkgs.docker ];
+    requires = [ "docker.service" ];
+    after = [ "docker.service" ];
+    wantedBy = [ "multi-user.target" ];
+
+    serviceConfig = {
+      Type = "simple";
+      WorkingDirectory = "/etc/nixos";
+      ExecStartPre = "${pkgs.docker}/bin/docker compose pull";
+      ExecStart = "${pkgs.docker}/bin/docker compose up";
+      ExecStop = "${pkgs.docker}/bin/docker compose down";
+      TimeoutStartSec = 0;
+    };
+  };
+
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
   # accidentally delete configuration.nix.
