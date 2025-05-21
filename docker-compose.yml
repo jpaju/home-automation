@@ -1,9 +1,79 @@
 services:
   homeassistant:
     container_name: home-assistant
-    image: homeassistant/home-assistant:2025.5.2
+    image: homeassistant/home-assistant:2025.4.1
     restart: on-failure
     network_mode: host
+    volumes:
+      - /srv/home-assistant/config:/config
+      - /srv/home-assistant/media:/media
     environment:
       - TZ=Europe/Helsinki
 
+  mosquitto:
+    container_name: mosquitto
+    image: eclipse-mosquitto:2.0.21
+    restart: on-failure
+    init: true # TODO Remove?
+    volumes:
+      - /srv/mosquitto/config:/mosquitto/config
+      - /srv/mosquitto/data:/mosquitto/data
+      - /srv/mosquitto/log:/mosquitto/log
+    ports:
+      - "1883:1883"
+
+  esphome:
+    container_name: esphome
+    image: ghcr.io/esphome/esphome:2025.3.3
+    restart: on-failure
+    network_mode: host
+    volumes:
+      - /srv/esphome/config:/config
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - USERNAME=esphome
+      - PASSWORD=xIPbmtiX9rFH5vrkIkQT
+
+  zigbee2mqtt:
+    container_name: zigbee2mqtt
+    image: koenkk/zigbee2mqtt:2.2.1
+    restart: on-failure
+    volumes:
+      - /srv/zigbee2mqtt/data:/app/data
+      - /run/udev:/run/udev:ro
+    ports:
+      - 8080:8080
+    environment:
+      - TZ=Europe/Helsinki
+      - Z2M_WATCHDOG=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,5,15,30,60
+    depends_on:
+      - mosquitto
+
+  zwavejs:
+    container_name: zwavejs
+    image: zwavejs/zwave-js-ui:10.1.4
+    restart: on-failure
+    tty: true # TODO Remove?
+    stop_signal: SIGINT
+    volumes:
+      - /srv/zwavejs:/usr/src/app/store
+    ports:
+      - '8091:8091' # web interface
+      - '3000:3000' # Z-Wave JS websocket server
+    environment:
+      - ZWAVEJS_EXTERNAL_CONFIG=/usr/src/app/store/.config-db
+      - TZ=Europe/Helsinki
+    devices:
+      - '/dev/serial/by-id/usb-Zooz_800_Z-Wave_Stick_533D004242-if00:/dev/zwave'
+
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:2.30.0-alpine
+    restart: on-failure
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/portrainer:/srv/portainer
+    ports:
+      - 9000:9000
+    environment:
+      - TZ=Europe/Helsinki

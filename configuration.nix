@@ -49,17 +49,20 @@
   networking.networkmanager.enable = true;
   networking.firewall = {
     enable = true;
+
     allowedTCPPorts = let
-      hass = 8123;
       ssh = 22;
       http = 80;
       https = 443;
-    in [ ssh http https hass ];
+      hass = 8123;
+      mqtt = 1883;
+    in [ ssh http https hass mqtt ];
 
     allowedUDPPorts = let
       ssdp = 1900;
       mdns = 5353;
-    in [ ssdp mdns ];
+      coap = 5683; # Shelly CoIoT
+    in [ ssdp mdns coap ];
   };
 
   services.openssh = {
@@ -82,7 +85,7 @@
     enable = true;
 
     virtualHosts = let
-      dockerUrl = "http://docker.int.jpaju.fi";
+      dockerUrl = "http://home-automation.int.jpaju.fi";
       proxyTo = backendUrl: {
         locations."/" = {
           proxyPass = backendUrl;
