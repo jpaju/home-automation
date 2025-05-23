@@ -7,5 +7,14 @@
   "prHourlyLimit": 10,
 
   "automerge": false,
-  "reviewers": ["jpaju"]
+  "reviewers": ["jpaju"],
+
+  "nix": {
+    "enabled": true
+  },
+
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["* 19 1-7 * 5"]
+  }
 }
