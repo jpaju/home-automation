@@ -47,6 +47,7 @@
           ./secrets.nix
           ./ssh-server.nix
           ./nginx.nix
+          ./hass.nix
 
           home-manager.nixosModules.home-manager
           {
