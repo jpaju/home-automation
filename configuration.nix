@@ -27,9 +27,6 @@
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
     shell = pkgs.fish;
-
-    openssh.authorizedKeys.keys =
-      [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILNCVK2DGtkXqX5eN+yGgBf7uDddLr89PCSYmIUhfobJ ${email}" ];
   };
 
   networking.hostName = "home-automation";
@@ -38,24 +35,17 @@
     enable = true;
 
     allowedTCPPorts = let
-      ssh = 22;
       http = 80;
       https = 443;
       hass = 8123;
       mqtt = 1883;
-    in [ ssh http https hass mqtt ];
+    in [ http https hass mqtt ];
 
     allowedUDPPorts = let
       ssdp = 1900;
       mdns = 5353;
       coap = 5683; # Shelly CoIoT
     in [ ssdp mdns coap ];
-  };
-
-  services.openssh = {
-    enable = true;
-    settings.PermitRootLogin = "no";
-    settings.AcceptEnv = "TERM COLORTERM";
   };
 
   security.acme = {

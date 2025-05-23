@@ -45,6 +45,7 @@
           ./hardware-configuration.nix
           ./nix-settings.nix
           ./secrets.nix
+          ./ssh-server.nix
 
           home-manager.nixosModules.home-manager
           {
