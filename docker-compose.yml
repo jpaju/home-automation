@@ -68,7 +68,7 @@ services:
 
   portainer:
     container_name: portainer
-    image: portainer/portainer-ce:2.30.0-alpine
+    image: portainer/portainer-ce:2.30.1-alpine
     restart: on-failure
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
