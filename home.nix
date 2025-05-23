@@ -1,13 +1,12 @@
-{ pkgs, dotfiles, username, userhome, ... }: {
+{ dotfiles, username, userhome, ... }: {
   programs.home-manager.enable = true;
 
   home = {
     stateVersion = "25.05";
     username = username;
     homeDirectory = userhome;
-    packages = with pkgs; [ tree fzf ];
   };
 
-  imports = with dotfiles.homeManagerModules; [ fish git gh starship helix zellij ];
+  imports = with dotfiles.homeManagerModules; [ fish starship zellij cli-tools dev-tools ];
 
 }
