@@ -24,7 +24,7 @@ services:
 
   esphome:
     container_name: esphome
-    image: ghcr.io/esphome/esphome:2025.3.3
+    image: ghcr.io/esphome/esphome:2025.5.0
     restart: on-failure
     network_mode: host
     volumes:
