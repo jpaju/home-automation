@@ -23,11 +23,15 @@
   outputs = { nixpkgs, home-manager, sops-nix, dotfiles, ... }:
     let
       system = "x86_64-linux";
+
       username = "jaakko";
       userhome = "/home/${username}";
       email = "jaakko.paju2@gmail.com";
+
       specialArgs = {
+        inherit home-manager sops-nix dotfiles;
         inherit system username userhome email;
+
         fishUtils = dotfiles.homeManagerModules.fishUtils;
         scls = dotfiles.inputs.scls;
         helix = dotfiles.inputs.helix;
@@ -47,19 +51,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = specialArgs;
-
-            home-manager.users.${username} = { pkgs, ... }: {
-              home.stateVersion = "25.05";
-
-              programs.home-manager.enable = true;
-
-              home.username = username;
-              home.homeDirectory = "/home/${username}";
-
-              home.packages = with pkgs; [ tree fzf ];
-
-              imports = with dotfiles.homeManagerModules; [ fish git gh starship helix zellij ];
-            };
+            home-manager.users.${username} = import ./home.nix;
           }
         ];
       };
