@@ -32,9 +32,6 @@
       [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILNCVK2DGtkXqX5eN+yGgBf7uDddLr89PCSYmIUhfobJ ${email}" ];
   };
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nixpkgs.config.allowUnfree = true;
-
   sops = {
     defaultSopsFile = ./secrets.yaml;
     defaultSopsFormat = "yaml";

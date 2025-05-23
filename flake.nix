@@ -43,6 +43,7 @@
         modules = [
           ./configuration.nix
           ./hardware-configuration.nix
+          ./nix-settings.nix
 
           sops-nix.nixosModules.sops
 
