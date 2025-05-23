@@ -51,7 +51,7 @@ services:
 
   zwavejs:
     container_name: zwavejs
-    image: zwavejs/zwave-js-ui:10.1.4
+    image: zwavejs/zwave-js-ui:10.5.1
     restart: on-failure
     tty: true # TODO Remove?
     stop_signal: SIGINT
