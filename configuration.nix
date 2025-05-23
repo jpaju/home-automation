@@ -1,4 +1,4 @@
-{ config, pkgs, username, email, ... }: {
+{ pkgs, username, ... }: {
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -35,53 +35,15 @@
     enable = true;
 
     allowedTCPPorts = let
-      http = 80;
-      https = 443;
       hass = 8123;
       mqtt = 1883;
-    in [ http https hass mqtt ];
+    in [ hass mqtt ];
 
     allowedUDPPorts = let
       ssdp = 1900;
       mdns = 5353;
       coap = 5683; # Shelly CoIoT
     in [ ssdp mdns coap ];
-  };
-
-  security.acme = {
-    acceptTerms = true;
-
-    defaults = {
-      inherit email;
-      dnsProvider = "cloudflare";
-      credentialFiles.CF_DNS_API_TOKEN_FILE = config.sops.secrets."cloudflare_api_token".path;
-    };
-  };
-
-  services.nginx = {
-    enable = true;
-
-    virtualHosts = let
-      dockerUrl = "http://home-automation.int.jpaju.fi";
-      proxyTo = backendUrl: {
-        locations."/" = {
-          proxyPass = backendUrl;
-          proxyWebsockets = true;
-          recommendedProxySettings = true;
-        };
-
-        # TODO Replace enableSSL with forceSSL?
-        addSSL = true;
-        enableACME = true;
-        acmeRoot = null;
-      };
-    in {
-      "hass.jpaju.fi" = proxyTo "${dockerUrl}:8123";
-      "esphome.int.jpaju.fi" = proxyTo "${dockerUrl}:6052";
-      "zigbee2mqtt.int.jpaju.fi" = proxyTo "${dockerUrl}:8080";
-      "zwavejs.int.jpaju.fi" = proxyTo "${dockerUrl}:8091";
-      "portainer.int.jpaju.fi" = proxyTo "${dockerUrl}:9000";
-    };
   };
 
   virtualisation.docker.enable = true;
