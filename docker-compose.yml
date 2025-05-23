@@ -72,7 +72,7 @@ services:
     restart: on-failure
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /opt/portrainer:/srv/portainer
+      - /srv/portainer:/data
     ports:
       - 9000:9000
     environment:
