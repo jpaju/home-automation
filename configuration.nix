@@ -1,4 +1,4 @@
-{ config, pkgs, username, userhome, email, ... }: {
+{ config, pkgs, username, email, ... }: {
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -31,16 +31,6 @@
     openssh.authorizedKeys.keys =
       [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILNCVK2DGtkXqX5eN+yGgBf7uDddLr89PCSYmIUhfobJ ${email}" ];
   };
-
-  sops = {
-    defaultSopsFile = ./secrets.yaml;
-    defaultSopsFormat = "yaml";
-    age.keyFile = "${userhome}/.config/sops/age/keys.txt"; # TODO User different filepath?
-
-    secrets.cloudflare_api_token = { };
-  };
-
-  environment.systemPackages = with pkgs; [ git sops ];
 
   networking.hostName = "home-automation";
   networking.networkmanager.enable = true;

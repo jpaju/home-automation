@@ -44,8 +44,7 @@
           ./configuration.nix
           ./hardware-configuration.nix
           ./nix-settings.nix
-
-          sops-nix.nixosModules.sops
+          ./secrets.nix
 
           home-manager.nixosModules.home-manager
           {
