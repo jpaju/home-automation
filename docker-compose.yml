@@ -1,7 +1,7 @@
 services:
   homeassistant:
     container_name: home-assistant
-    image: homeassistant/home-assistant:2025.4.1
+    image: homeassistant/home-assistant:2025.5.3
     restart: on-failure
     network_mode: host
     volumes:
