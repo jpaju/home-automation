@@ -15,7 +15,7 @@
     };
 
     dotfiles = {
-      url = "github:jpaju/dotfiles/expose-nix-modules";
+      url = "github:jpaju/dotfiles/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
