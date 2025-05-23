@@ -1,5 +1,5 @@
 {
-  description = "My NixOS configuration as a flake";
+  description = "NixOS configuration for home automation with Home Assistant";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -23,7 +23,6 @@
   outputs = { nixpkgs, home-manager, sops-nix, dotfiles, ... }:
     let
       system = "x86_64-linux";
-
       username = "jaakko";
       userhome = "/home/${username}";
       email = "jaakko.paju2@gmail.com";
@@ -37,8 +36,8 @@
         inherit system specialArgs;
 
         modules = [
-          ./configuration.nix
           ./hardware-configuration.nix
+          ./configuration.nix
           ./nix-settings.nix
           ./home-manager.nix
 

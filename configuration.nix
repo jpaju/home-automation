@@ -15,7 +15,8 @@
     #   useXkbConfig = true; # use xkb.options in tty.
   };
 
-  # Don't remove if shells are installed by other means, otherwise nix environment is not loaded correctly
+  # Don't remove even if shells are installed by other means,
+  # or nix environment might not loaded correctly
   programs = {
     fish.enable = true;
     zsh.enable = true;
