@@ -117,10 +117,11 @@
     wantedBy = [ "multi-user.target" ];
 
     serviceConfig = {
-      Type = "simple";
+      Type = "oneshot";
+      RemainAfterExit = true;
       WorkingDirectory = "/etc/nixos";
-      ExecStartPre = "${pkgs.docker}/bin/docker compose pull";
-      ExecStart = "${pkgs.docker}/bin/docker compose up";
+      ExecStart = "${pkgs.docker}/bin/docker compose up -d --remove-orphans";
+      ExecReload = "${pkgs.docker}/bin/docker compose up -d";
       ExecStop = "${pkgs.docker}/bin/docker compose down";
       TimeoutStartSec = 0;
     };
