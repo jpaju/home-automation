@@ -31,10 +31,6 @@
       specialArgs = {
         inherit home-manager sops-nix dotfiles;
         inherit system username userhome email;
-
-        fishUtils = dotfiles.homeManagerModules.fishUtils;
-        scls = dotfiles.inputs.scls;
-        helix = dotfiles.inputs.helix;
       };
     in {
       nixosConfigurations.home-automation = nixpkgs.lib.nixosSystem {
@@ -44,18 +40,12 @@
           ./configuration.nix
           ./hardware-configuration.nix
           ./nix-settings.nix
+          ./home-manager.nix
+
           ./secrets.nix
           ./ssh-server.nix
           ./nginx.nix
           ./hass.nix
-
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = specialArgs;
-            home-manager.users.${username} = import ./home.nix;
-          }
         ];
       };
     };
