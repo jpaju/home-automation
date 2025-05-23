@@ -4,6 +4,7 @@
 
   "timezone": "Europe/Helsinki",
   "schedule": ["* 19 * * 5"],
+  "prHourlyLimit": 10,
 
   "automerge": false,
   "reviewers": ["jpaju"]
