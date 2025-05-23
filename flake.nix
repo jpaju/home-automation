@@ -36,15 +36,18 @@
         inherit system specialArgs;
 
         modules = [
-          ./hardware-configuration.nix
-          ./configuration.nix
-          ./nix-settings.nix
-          ./home-manager.nix
+          ./system/hardware-configuration.nix
+          ./system/configuration.nix
+          ./system/nix-settings.nix
+          ./system/ssh-server.nix
 
-          ./secrets.nix
-          ./ssh-server.nix
-          ./nginx.nix
-          ./hass.nix
+          ./secrets/secrets.nix
+
+          ./users/home-manager.nix
+          ./users/user.nix
+
+          ./home-automation/nginx.nix
+          ./home-automation/hass.nix
         ];
       };
     };

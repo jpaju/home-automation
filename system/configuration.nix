@@ -1,4 +1,4 @@
-{ pkgs, username, ... }: {
+{ ... }: {
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -23,12 +23,6 @@
   };
 
   security.sudo.wheelNeedsPassword = false;
-
-  users.users."${username}" = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-    shell = pkgs.fish;
-  };
 
   networking.hostName = "home-automation";
   networking.networkmanager.enable = true;

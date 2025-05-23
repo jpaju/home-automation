@@ -24,7 +24,7 @@
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
-      WorkingDirectory = "/etc/nixos";
+      WorkingDirectory = "/etc/nixos/home-automation";
       ExecStart = "${pkgs.docker}/bin/docker compose up -d --remove-orphans";
       ExecReload = "${pkgs.docker}/bin/docker compose up -d";
       ExecStop = "${pkgs.docker}/bin/docker compose down";
