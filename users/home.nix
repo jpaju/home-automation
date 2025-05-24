@@ -1,4 +1,4 @@
-{ dotfiles, username, userhome, ... }: {
+{ pkgs, dotfiles, username, userhome, ... }: {
   programs.home-manager.enable = true;
 
   home = {
@@ -9,4 +9,5 @@
 
   imports = with dotfiles.homeManagerModules; [ fish starship zellij cli-tools dev-tools ];
 
+  home.packages = [ pkgs.mqttui ];
 }
