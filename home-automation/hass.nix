@@ -1,15 +1,12 @@
 { pkgs, ... }: {
-  networking.firewall = {
-    allowedTCPPorts = let
-      hass = 8123;
-      mqtt = 1883;
-    in [ hass mqtt ];
-
-    allowedUDPPorts = let
-      ssdp = 1900;
-      mdns = 5353;
-      coap = 5683; # Shelly CoIoT
-    in [ ssdp mdns coap ];
+  networking.firewall = let
+    hass = 8123;
+    ssdp = 1900;
+    mdns = 5353;
+    coap = 5683; # Shelly CoIoT
+  in {
+    allowedTCPPorts = [ hass ];
+    allowedUDPPorts = [ ssdp mdns coap ];
   };
 
   virtualisation.docker.enable = true;
