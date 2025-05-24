@@ -13,8 +13,7 @@
           recommendedProxySettings = true;
         };
 
-        # TODO Replace enableSSL with forceSSL?
-        addSSL = true;
+        forceSSL = true;
         enableACME = true;
         acmeRoot = null;
       };
