@@ -10,18 +10,6 @@ services:
     environment:
       - TZ=Europe/Helsinki
 
-  mosquitto:
-    container_name: mosquitto
-    image: eclipse-mosquitto:2.0.21
-    restart: on-failure
-    init: true # TODO Remove?
-    volumes:
-      - /srv/mosquitto/config:/mosquitto/config
-      - /srv/mosquitto/data:/mosquitto/data
-      - /srv/mosquitto/log:/mosquitto/log
-    ports:
-      - "1883:1883"
-
   esphome:
     container_name: esphome
     image: ghcr.io/esphome/esphome:2025.5.0
@@ -33,6 +21,18 @@ services:
     environment:
       - USERNAME=esphome
       - PASSWORD=xIPbmtiX9rFH5vrkIkQT
+
+  mosquitto:
+    container_name: mosquitto
+    image: eclipse-mosquitto:2.0.21
+    restart: on-failure
+    init: true
+    volumes:
+      - /srv/mosquitto/config:/mosquitto/config
+      - /srv/mosquitto/data:/mosquitto/data
+      - /srv/mosquitto/log:/mosquitto/log
+    ports:
+      - "1883:1883"
 
   zigbee2mqtt:
     container_name: zigbee2mqtt
@@ -53,7 +53,7 @@ services:
     container_name: zwavejs
     image: zwavejs/zwave-js-ui:10.5.1
     restart: on-failure
-    tty: true # TODO Remove?
+    tty: true # Official recommendation, see  https://github.com/zwave-js/zwave-js-ui/blob/master/docker/docker-compose.yml
     stop_signal: SIGINT
     volumes:
       - /srv/zwavejs:/usr/src/app/store
