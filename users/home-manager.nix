@@ -4,7 +4,7 @@ let
     inherit home-manager sops-nix dotfiles;
     inherit system username userhome;
 
-    fishUtils = dotfiles.homeManagerModules.fishUtils;
+    fishUtils = dotfiles.homeModules.fishUtils;
     scls = dotfiles.inputs.scls;
     helix = dotfiles.inputs.helix;
   };

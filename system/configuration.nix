@@ -15,13 +15,6 @@
     #   useXkbConfig = true; # use xkb.options in tty.
   };
 
-  # Don't remove even if shells are installed by other means,
-  # or nix environment might not loaded correctly
-  programs = {
-    fish.enable = true;
-    zsh.enable = true;
-  };
-
   security.sudo.wheelNeedsPassword = false;
 
   networking.hostName = "home-automation";

@@ -35,9 +35,9 @@
         inherit system specialArgs;
 
         modules = [
+          dotfiles.systemModules.nix-settings
           ./system/hardware-configuration.nix
           ./system/configuration.nix
-          ./system/nix-settings.nix
           ./system/ssh-server.nix
 
           ./secrets/secrets.nix
