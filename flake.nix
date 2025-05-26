@@ -25,11 +25,10 @@
       system = "x86_64-linux";
       username = "jaakko";
       userhome = "/home/${username}";
-      email = "jaakko.paju2@gmail.com";
 
       specialArgs = {
         inherit home-manager sops-nix dotfiles;
-        inherit system username userhome email;
+        inherit system username userhome;
       };
     in {
       nixosConfigurations.home-automation = nixpkgs.lib.nixosSystem {

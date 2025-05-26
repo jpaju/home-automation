@@ -1,4 +1,4 @@
-{ config, email, ... }: {
+{ config, ... }: {
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   services.nginx = {
@@ -30,7 +30,7 @@
     acceptTerms = true;
 
     defaults = {
-      inherit email;
+      email = "jpaju.admin+acme@icloud.com";
       dnsProvider = "cloudflare";
       credentialFiles.CF_DNS_API_TOKEN_FILE = config.sops.secrets."cloudflare_api_token".path;
     };
