@@ -83,6 +83,16 @@ This will pull the updated Docker images and recreate the containers with the ne
 
 <!-- TODO: Add details on configuring Zigbee USB stick serial over network -->
 
+## VS Code Remote SSH
+
+To connect to this NixOS host with VS Code Remote SSH, you must add the following setting to your VS Code `settings.json`:
+
+```json
+"remote.SSH.useLocalServer": false
+```
+
+This is required because the default shell is fish, and there's an [open issue](https://github.com/microsoft/vscode-remote-release/issues/2509) with VS Code Remote SSH and fish shell.
+
 ## Secrets management
 
 Secrets are managed with [sops-nix](https://github.com/Mic92/sops-nix). Secrets are encrypted so they can be committed to git.

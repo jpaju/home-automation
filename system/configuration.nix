@@ -15,6 +15,9 @@
     #   useXkbConfig = true; # use xkb.options in tty.
   };
 
+  # Enables the use of dynamically linked binaries not built for nix, for example VS Code server
+  programs.nix-ld.enable = true;
+
   security.sudo.wheelNeedsPassword = false;
 
   networking.hostName = "home-automation";
