@@ -43,6 +43,11 @@ If you need to manually restart the services, you can use:
 systemctl restart home-automation
 ```
 
+### Data persistence
+
+Necessary state from the docker containers is stored in the `/srv/` folder on the host system.
+Subfolders like `/srv/home-assistant/` and `/srv/zigbee2mqtt/` are mounted to their respective docker containers.
+
 ### Viewing logs
 
 To view logs from the home-automation service:
@@ -68,6 +73,16 @@ This repository uses docker compose to run home automation services. When versio
 
 This will pull the updated Docker images and recreate the containers with the new versions.
 
+### Mikrotik configuration
+
+#### Port forwarding
+
+<!-- TODO: Add details on Mikrotik port forwarding configuration -->
+
+#### Zigbee USB stick serial over network
+
+<!-- TODO: Add details on configuring Zigbee USB stick serial over network -->
+
 ## Secrets management
 
 Secrets are managed with [sops-nix](https://github.com/Mic92/sops-nix). Secrets are encrypted so they can be committed to git.
@@ -83,13 +98,3 @@ Make sure you have the age key setup at:
 ### How to edit secrets
 
 <!-- TODO: Add instructions for editing secrets with sops-nix -->
-
-## Mikrotik configuration
-
-### Port forwarding
-
-<!-- TODO: Add details on Mikrotik port forwarding configuration -->
-
-### Zigbee USB stick serial over network
-
-<!-- TODO: Add details on configuring Zigbee USB stick serial over network -->
