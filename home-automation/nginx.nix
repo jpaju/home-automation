@@ -6,7 +6,7 @@
 
     virtualHosts = let
       dockerUrl = "http://home-automation.int.jpaju.fi";
-      proxyTo = backendUrl: {
+      proxyTo = { backendUrl, allowInternetAccess ? false }: {
         locations."/" = {
           proxyPass = backendUrl;
           proxyWebsockets = true;
@@ -16,13 +16,25 @@
         forceSSL = true;
         enableACME = true;
         acmeRoot = null;
+
+        extraConfig = if allowInternetAccess then
+          ""
+        else ''
+          allow 192.168.0.0/16;
+          allow 10.0.0.0/8;
+          allow 172.16.0.0/12;
+          deny all;
+        '';
       };
     in {
-      "hass.jpaju.fi" = proxyTo "${dockerUrl}:8123";
-      "esphome.int.jpaju.fi" = proxyTo "${dockerUrl}:6052";
-      "zigbee2mqtt.int.jpaju.fi" = proxyTo "${dockerUrl}:8080";
-      "zwavejs.int.jpaju.fi" = proxyTo "${dockerUrl}:8091";
-      "portainer.int.jpaju.fi" = proxyTo "${dockerUrl}:9000";
+      "hass.jpaju.fi" = proxyTo {
+        backendUrl = "${dockerUrl}:8123";
+        allowInternetAccess = true;
+      };
+      "esphome.int.jpaju.fi" = proxyTo { backendUrl = "${dockerUrl}:6052"; };
+      "zigbee2mqtt.int.jpaju.fi" = proxyTo { backendUrl = "${dockerUrl}:8080"; };
+      "zwavejs.int.jpaju.fi" = proxyTo { backendUrl = "${dockerUrl}:8091"; };
+      "portainer.int.jpaju.fi" = proxyTo { backendUrl = "${dockerUrl}:9000"; };
     };
   };
 
