@@ -7,7 +7,7 @@
     homeDirectory = userhome;
   };
 
-  imports = with dotfiles.homeModules; [ nix fish starship zellij cli-tools dev-tools ];
+  imports = with dotfiles.homeModules; [ cli-tools dev-tools nix shell ];
 
   home.packages = [ pkgs.mqttui ];
 }
