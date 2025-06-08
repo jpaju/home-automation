@@ -48,6 +48,19 @@ systemctl restart home-automation
 Necessary state from the docker containers is stored in the `/srv/` folder on the host system.
 Subfolders like `/srv/home-assistant/` and `/srv/zigbee2mqtt/` are mounted to their respective docker containers.
 
+### Backups
+
+We use Restic for backups, which automatically backs up files from the `/srv` folder to a local NAS each day.
+
+#### Synology SFTP Setup
+
+Restic requires non-interactive SFTP login for automated backups. Therefore, public key authentication must be configured.
+
+- Generate a keypair for the **root user** on the home-automation machine
+- Temporarily add the backup user to Synology's administrators group to enable SSH access
+- Copy the SSH public key to Synology using: `ssh-copy-id <user>@<synology-host>`
+- Remove the backup user from Synology's administrators group after setup
+
 ### Viewing logs
 
 To view logs from the home-automation service:
