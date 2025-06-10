@@ -1,0 +1,5 @@
+{ ... }: {
+  imports = [ # Newline
+    ./secrets.nix
+  ];
+}

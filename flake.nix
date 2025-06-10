@@ -34,19 +34,11 @@
       nixosConfigurations.home-automation = nixpkgs.lib.nixosSystem {
         inherit system specialArgs;
 
-        modules = [
-          dotfiles.systemModules.nix-settings
-          ./system/hardware-configuration.nix
-          ./system/configuration.nix
-          ./system/ssh-server.nix
-
-          ./secrets/secrets.nix
-
-          ./users/home-manager.nix
-          ./users/user.nix
-
-          ./home-automation/nginx.nix
-          ./home-automation/hass.nix
+        modules = [ # Newline
+          ./system
+          ./users
+          ./secrets
+          ./home-automation
         ];
       };
     };
