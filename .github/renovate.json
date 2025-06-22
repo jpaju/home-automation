@@ -3,7 +3,7 @@
   "extends": ["config:recommended"],
 
   "timezone": "Europe/Helsinki",
-  "schedule": ["* 19 * * 5"],
+  "schedule": ["* * * * 6,0"],
   "prHourlyLimit": 10,
 
   "automerge": false,
