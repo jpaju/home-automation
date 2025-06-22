@@ -8,13 +8,5 @@
 
   "automerge": false,
   "reviewers": ["jpaju"],
-
-  "nix": {
-    "enabled": true
-  },
-
-  "lockFileMaintenance": {
-    "enabled": true,
-    "schedule": ["* 19 1-7 * 5"]
-  }
+  "semanticCommits": "disabled"
 }
