@@ -9,6 +9,8 @@
     allowedUDPPorts = [ ssdp mdns coap ];
   };
 
+  environment.systemPackages = [ pkgs.sqlite pkgs.lazysql ];
+
   virtualisation.docker.enable = true;
 
   systemd.services.home-automation = {
