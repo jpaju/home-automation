@@ -9,6 +9,16 @@
     allowedUDPPorts = [ ssdp mdns coap ];
   };
 
+  systemd.tmpfiles.settings."10-hass" = {
+    "/srv" = {
+      d = {
+        user = "root";
+        group = "wheel";
+        mode = "0774";
+      };
+    };
+  };
+
   environment.systemPackages = [ pkgs.sqlite pkgs.lazysql ];
 
   virtualisation.docker.enable = true;
