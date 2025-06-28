@@ -1,11 +1,12 @@
 { pkgs, ... }: {
   networking.firewall = let
+    mqtt = 1883;
     hass = 8123;
     ssdp = 1900;
     mdns = 5353;
     coap = 5683; # Shelly CoIoT
   in {
-    allowedTCPPorts = [ hass ];
+    allowedTCPPorts = [ hass mqtt ];
     allowedUDPPorts = [ ssdp mdns coap ];
   };
 
