@@ -36,7 +36,7 @@
       RemainAfterExit = true;
       WorkingDirectory = "/etc/nixos/home-automation";
       ExecStart = "${pkgs.docker}/bin/docker compose up -d --remove-orphans";
-      ExecReload = "${pkgs.docker}/bin/docker compose up -d";
+      ExecReload = "${pkgs.docker}/bin/docker compose up -d --remove-orphans";
       ExecStop = "${pkgs.docker}/bin/docker compose down";
       TimeoutStartSec = 0;
     };
