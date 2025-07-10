@@ -1,10 +1,10 @@
-{ pkgs, sops-nix, userhome, username, ... }: {
+{ pkgs, sops-nix, username, ... }: {
   imports = [ sops-nix.nixosModules.sops ];
 
   sops = {
     defaultSopsFile = ./secrets.yaml;
     defaultSopsFormat = "yaml";
-    age.keyFile = "${userhome}/.config/sops/age/keys.txt"; # TODO User different filepath?
+    age.keyFile = "/etc/sops/age/keys.txt";
 
     secrets.anthropic_api_key = { owner = username; };
     secrets.cloudflare_api_token = { };
