@@ -1,7 +1,7 @@
 { config, ... }:
 let
   repository = "sftp:home-automation@jp-nas1.int.jpaju.fi:/Backupit/home-automation";
-  passwordFile = config.sops.secrets."restic/repository/password".path;
+  passwordFile = config.sops.secrets.restic_repository_password.path;
 
   esphome = {
     include = "/srv/esphome";

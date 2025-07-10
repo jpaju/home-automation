@@ -8,7 +8,7 @@
 
     secrets.anthropic_api_key = { owner = username; };
     secrets.cloudflare_api_token = { };
-    secrets."restic/repository/password" = { };
+    secrets.restic_repository_password = { };
   };
 
   environment.systemPackages = with pkgs; [ git sops ];
