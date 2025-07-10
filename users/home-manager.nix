@@ -1,8 +1,9 @@
-{ system, home-manager, sops-nix, dotfiles, username, userhome, ... }:
+{ system, home-manager, sops-nix, dotfiles, username, userhome, config, ... }:
 let
   specialArgs = {
     inherit home-manager sops-nix dotfiles;
     inherit system username userhome;
+    systemSops = config.sops;
 
     fishUtils = dotfiles.homeModules.fishUtils;
     scls = dotfiles.inputs.scls;

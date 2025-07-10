@@ -7,7 +7,10 @@
     homeDirectory = userhome;
   };
 
-  imports = with dotfiles.homeModules; [ cli-tools dev-tools nix shell ];
+  imports = let
+    otherModules = [ ./secrets.nix ];
+    dotfilesModules = with dotfiles.homeModules; [ cli-tools dev-tools nix shell ];
+  in dotfilesModules ++ otherModules;
 
   home.packages = [ pkgs.mqttui ];
 }
