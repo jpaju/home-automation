@@ -37,7 +37,6 @@
         modules = [ # Newline
           ./system
           ./users
-          ./secrets
           ./home-automation
         ];
       };
