@@ -86,15 +86,42 @@ This repository uses docker compose to run home automation services. When versio
 
 This will pull the updated Docker images and recreate the containers with the new versions.
 
-### Mikrotik configuration
+### External configuration
 
-#### Port forwarding
+Configuration required outside of this repository on routers, network devices, and host systems.
 
-<!-- TODO: Add details on Mikrotik port forwarding configuration -->
+#### DNS and port forwarding
 
-#### Zigbee USB stick serial over network
+To access home automation services from outside the network, configure DNS and port forwarding as follows:
 
-<!-- TODO: Add details on configuring Zigbee USB stick serial over network -->
+**Traffic flow**: Internet/local network → router → nginx → docker containers (Home assistant, Zigbee2MQTT, etc.)
+
+1. **DNS Configuration**: Point all domain names ending with `int.jpaju.fi` to this NixOS host.
+   The specific domain names can be found in the `nginx.nix` file.
+   Create an A record for one domain and use CNAME records for others, for example:
+
+   - A record: `home-automation.int.jpaju.fi` → `<NixOS-host-IP>`
+   - CNAME record(s): `zigbee.int.jpaju.fi` → `home-automation.int.jpaju.fi`
+
+2. **Port Forwarding**: The domain `hass.jpaju.fi` points to router public IP via dynDNS.
+   Configure router to forward traffic from ports 80 and 443 to the nginx service on this NixOS host.
+
+#### Zigbee adapter serial over network
+
+Zigbee2MQTT is configured to use a zigbee adapter via serial over network.
+
+The configuration is located at `/srv/zigbee2mqtt/data/configuration.yaml` and contains the IP address and port of the remote zigbee adapter.
+
+#### Z-Wave USB stick passthrough
+
+The Z-Wave JS UI container requires access to the Z-Wave device.
+The docker configuration expects the Z-Wave USB device to be available at `/dev/serial/by-id/usb-Zooz_800_Z-Wave_Stick_533D004242-if00`.
+
+**If NixOS is running as a virtualization guest:**
+
+1. Configure the hypervisor to pass through the USB Z-Wave stick to the NixOS guest
+2. Ensure the USB device appears in the guest at the expected path
+3. Verify device permissions allow the docker container to access it
 
 ## VS Code Remote SSH
 
