@@ -131,19 +131,20 @@ This will pull the updated Docker images and recreate the containers with the ne
 
 ## Secrets management
 
-Secrets are managed with [sops-nix](https://github.com/Mic92/sops-nix). Secrets are encrypted so they can be committed to git.
+Secrets are managed with [sops-nix](https://github.com/Mic92/sops-nix) and encrypted with age keys, allowing them to be safely committed to git.
 
-### Initial setup
+### Prerequisites
 
-Make sure you have the age key setup at:
+Ensure you have the age key configured at `~/.config/sops/age/keys.txt`.
 
+### Editing secrets
+
+```bash
+cd system/secrets
+sops secrets.yaml
 ```
-~/.config/sops/age/keys.txt
-```
 
-### How to edit secrets
-
-<!-- TODO: Add instructions for editing secrets with sops-nix -->
+This opens the secrets file in your `$EDITOR`. Make your changes, then save and quit - the file will be automatically encrypted.
 
 ## Dependency updates
 
