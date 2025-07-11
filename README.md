@@ -1,6 +1,17 @@
 # NixOS home automation
 
-This repository contains [NixOS](https://nixos.org/) configuration for home automation system with [home assistant](https://www.home-assistant.io/)
+This repository contains [NixOS](https://nixos.org/) system for home automation services with [Home Assistant](https://www.home-assistant.io/),
+[Zigbee2MQTT](https://www.zigbee2mqtt.io/), [Z-Wave JS UI](https://github.com/zwave-js/zwave-js-ui), and [ESPHome](https://esphome.io/) running in Docker containers.
+
+## Architecture
+
+This system uses a hybrid approach combining NixOS for system-level configuration and Docker for home automation services:
+
+- **NixOS** manages the host system, networking, nginx reverse proxy, and systemd services
+- **Docker Compose** defines and runs the home automation services in containers
+- **Data persistence** is handled by mounting `/srv/` directories from host to containers
+- **Systemd** manages the Docker Compose stack as a single service unit
+- **Nginx** provides SSL termination and reverse proxy to containers
 
 ## External configuration
 
