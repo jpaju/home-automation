@@ -24,7 +24,7 @@ services:
 
   mosquitto:
     container_name: mosquitto
-    image: eclipse-mosquitto:2.0.21
+    image: eclipse-mosquitto:2.0.22
     restart: on-failure
     init: true
     volumes:
