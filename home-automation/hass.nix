@@ -23,6 +23,8 @@
   environment.systemPackages = [ pkgs.sqlite pkgs.lazysql ];
 
   virtualisation.docker.enable = true;
+  virtualisation.docker.autoPrune.enable = true;
+  virtualisation.docker.autoPrune.flags = [ ''--filter "until=720h"'' ]; # 1 week
 
   systemd.services.home-automation = {
     enable = true;
