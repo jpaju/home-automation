@@ -23,6 +23,8 @@
   environment.systemPackages = [ pkgs.sqlite pkgs.lazysql ];
 
   virtualisation.docker.enable = true;
+  virtualisation.docker.autoPrune.enable = true;
+  virtualisation.docker.autoPrune.flags = [ "--all" ];
 
   systemd.services.home-automation = {
     enable = true;
