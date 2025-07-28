@@ -51,7 +51,7 @@ services:
 
   zwavejs:
     container_name: zwavejs
-    image: zwavejs/zwave-js-ui:10.9.0
+    image: zwavejs/zwave-js-ui:10.10.0
     restart: on-failure
     tty: true # Official recommendation, see  https://github.com/zwave-js/zwave-js-ui/blob/master/docker/docker-compose.yml
     stop_signal: SIGINT
