@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, lib, ... }: {
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   services.nginx = {
@@ -6,12 +6,14 @@
 
     virtualHosts = let
       dockerUrl = "http://home-automation.int.jpaju.fi";
-      proxyTo = { backendUrl, allowInternetAccess ? false }: {
+      proxyTo = { backendUrl, allowInternetAccess ? false, port ? null }: {
         locations."/" = {
           proxyPass = backendUrl;
           proxyWebsockets = true;
           recommendedProxySettings = true;
         };
+
+        listen = lib.optionals (port != null) [ { addr = "0.0.0.0"; port = port; ssl = true; } ];
 
         forceSSL = true;
         enableACME = true;
@@ -28,6 +30,7 @@
       };
     in {
       "hass.jpaju.fi" = proxyTo {
+        port = 63719;
         backendUrl = "${dockerUrl}:8123";
         allowInternetAccess = true;
       };
