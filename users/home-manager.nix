@@ -6,7 +6,6 @@ let
     systemSops = config.sops;
 
     fishUtils = dotfiles.homeModules.fishUtils;
-    scls = dotfiles.inputs.scls;
     helix = dotfiles.inputs.helix;
   };
 in {
