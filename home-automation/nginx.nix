@@ -11,7 +11,10 @@
 
     virtualHosts =
       let
-        dockerUrl = "http://home-automation.int.jpaju.fi";
+        externalDomain = "jpaju.fi";
+        internalDomain = "int.jpaju.fi";
+        dockerUrl = "http://home-automation.${internalDomain}";
+
         proxyTo =
           {
             backendUrl,
@@ -50,16 +53,16 @@
           };
       in
       {
-        "hass.jpaju.fi" = proxyTo {
+        "hass.${externalDomain}" = proxyTo {
           port = 63719;
           backendUrl = "${dockerUrl}:8123";
           allowInternetAccess = true;
         };
-        "esphome.int.jpaju.fi" = proxyTo { backendUrl = "${dockerUrl}:6052"; };
-        "zigbee2mqtt.int.jpaju.fi" = proxyTo { backendUrl = "${dockerUrl}:8080"; };
-        "zwavejs.int.jpaju.fi" = proxyTo { backendUrl = "${dockerUrl}:8091"; };
-        "portainer.int.jpaju.fi" = proxyTo { backendUrl = "${dockerUrl}:9000"; };
-        "matter.int.jpaju.fi" = proxyTo { backendUrl = "${dockerUrl}:5580"; };
+        "esphome.${internalDomain}" = proxyTo { backendUrl = "${dockerUrl}:6052"; };
+        "zigbee2mqtt.${internalDomain}" = proxyTo { backendUrl = "${dockerUrl}:8080"; };
+        "zwavejs.${internalDomain}" = proxyTo { backendUrl = "${dockerUrl}:8091"; };
+        "portainer.${internalDomain}" = proxyTo { backendUrl = "${dockerUrl}:9000"; };
+        "matter.${internalDomain}" = proxyTo { backendUrl = "${dockerUrl}:5580"; };
       };
   };
 
