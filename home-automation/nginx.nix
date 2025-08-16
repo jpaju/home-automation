@@ -38,6 +38,7 @@
       "zigbee2mqtt.int.jpaju.fi" = proxyTo { backendUrl = "${dockerUrl}:8080"; };
       "zwavejs.int.jpaju.fi" = proxyTo { backendUrl = "${dockerUrl}:8091"; };
       "portainer.int.jpaju.fi" = proxyTo { backendUrl = "${dockerUrl}:9000"; };
+      "matter.int.jpaju.fi" = proxyTo { backendUrl = "${dockerUrl}:5580"; };
     };
   };
 

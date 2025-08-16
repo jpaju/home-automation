@@ -27,6 +27,10 @@ let
     include = "/srv/mosquitto";
     exclude = [ "/srv/mosquitto/log/mosquitto.log" ];
   };
+  matter = {
+    include = "/srv/matter";
+    exclude = [];
+  };
   portainer = {
     include = "/srv/portainer";
     exclude = [ "/srv/portainer/bin" ];
@@ -37,9 +41,14 @@ let
   };
   zwavejs = {
     include = "/srv/zwavejs";
-    exclude = [ "/srv/zwavejs/logs" "/srv/zwavejs/.config-db" "/srv/zwavejs/*.lock" ];
+    exclude = [
+      "/srv/zwavejs/logs"
+      "/srv/zwavejs/.config-db"
+      "/srv/zwavejs/*.lock"
+    ];
   };
-in {
+in
+{
   services.restic.backups.home-automation = {
     inherit repository passwordFile;
 
@@ -56,7 +65,7 @@ in {
       Persistent = true;
     };
 
-    pruneOpts = [ # Newline
+    pruneOpts = [
       "--keep-daily 30"
       "--keep-weekly 5"
       "--keep-monthly 12"
@@ -67,12 +76,19 @@ in {
       esphome.include
       home-assistant.include
       mosquitto.include
+      matter.include
       portainer.include
       zigbee2mqtt.include
       zwavejs.include
     ];
 
-    exclude = esphome.exclude ++ home-assistant.exclude ++ mosquitto.exclude ++ portainer.exclude ++ zigbee2mqtt.exclude
+    exclude =
+      esphome.exclude
+      ++ home-assistant.exclude
+      ++ mosquitto.exclude
+      ++ matter.exclude
+      ++ portainer.exclude
+      ++ zigbee2mqtt.exclude
       ++ zwavejs.exclude;
   };
 }

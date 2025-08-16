@@ -77,3 +77,13 @@ services:
       - 9000:9000
     environment:
       - TZ=Europe/Helsinki
+
+  matter-server:
+    container_name: matter-server
+    image: ghcr.io/home-assistant-libs/python-matter-server:8.1.0
+    restart: on-failure
+    network_mode: host
+    volumes:
+      - /srv/matter:/data/
+    environment:
+      - TZ=Europe/Helsinki
