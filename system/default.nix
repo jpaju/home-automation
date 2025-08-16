@@ -1,5 +1,6 @@
-{ dotfiles, ... }: {
-  imports = [ # Newline
+{ dotfiles, ... }:
+{
+  imports = [
     dotfiles.systemModules.nix-settings
     ./configuration.nix
     ./hardware-configuration.nix

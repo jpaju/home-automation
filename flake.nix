@@ -20,7 +20,14 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, sops-nix, dotfiles, ... }:
+  outputs =
+    {
+      nixpkgs,
+      home-manager,
+      sops-nix,
+      dotfiles,
+      ...
+    }:
     let
       system = "x86_64-linux";
       username = "jaakko";
@@ -30,11 +37,12 @@
         inherit home-manager sops-nix dotfiles;
         inherit system username userhome;
       };
-    in {
+    in
+    {
       nixosConfigurations.home-automation = nixpkgs.lib.nixosSystem {
         inherit system specialArgs;
 
-        modules = [ # Newline
+        modules = [
           ./system
           ./users
           ./home-automation
@@ -42,4 +50,3 @@
       };
     };
 }
-

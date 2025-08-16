@@ -1,14 +1,24 @@
-{ pkgs, ... }: {
-  networking.firewall = let
-    mqtt = 1883;
-    hass = 8123;
-    ssdp = 1900;
-    mdns = 5353;
-    coap = 5683; # Shelly CoIoT
-  in {
-    allowedTCPPorts = [ hass mqtt ];
-    allowedUDPPorts = [ ssdp mdns coap ];
-  };
+{ pkgs, ... }:
+{
+  networking.firewall =
+    let
+      mqtt = 1883;
+      hass = 8123;
+      ssdp = 1900;
+      mdns = 5353;
+      coap = 5683; # Shelly CoIoT
+    in
+    {
+      allowedTCPPorts = [
+        hass
+        mqtt
+      ];
+      allowedUDPPorts = [
+        ssdp
+        mdns
+        coap
+      ];
+    };
 
   systemd.tmpfiles.settings."10-hass" = {
     "/srv" = {
@@ -20,7 +30,10 @@
     };
   };
 
-  environment.systemPackages = [ pkgs.sqlite pkgs.lazysql ];
+  environment.systemPackages = [
+    pkgs.sqlite
+    pkgs.lazysql
+  ];
 
   virtualisation.docker.enable = true;
   virtualisation.docker.autoPrune.enable = true;

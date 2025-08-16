@@ -1,4 +1,13 @@
-{ system, home-manager, sops-nix, dotfiles, username, userhome, config, ... }:
+{
+  system,
+  home-manager,
+  sops-nix,
+  dotfiles,
+  username,
+  userhome,
+  config,
+  ...
+}:
 let
   specialArgs = {
     inherit home-manager sops-nix dotfiles;
@@ -8,7 +17,8 @@ let
     fishUtils = dotfiles.homeModules.fishUtils;
     helix = dotfiles.inputs.helix;
   };
-in {
+in
+{
   imports = [
     home-manager.nixosModules.home-manager
     {
@@ -20,4 +30,3 @@ in {
   ];
 
 }
-

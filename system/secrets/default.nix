@@ -1,4 +1,10 @@
-{ pkgs, sops-nix, username, ... }: {
+{
+  pkgs,
+  sops-nix,
+  username,
+  ...
+}:
+{
   imports = [ sops-nix.nixosModules.sops ];
 
   sops = {
@@ -6,10 +12,15 @@
     defaultSopsFormat = "yaml";
     age.keyFile = "/etc/sops/age/keys.txt";
 
-    secrets.anthropic_api_key = { owner = username; };
+    secrets.anthropic_api_key = {
+      owner = username;
+    };
     secrets.cloudflare_api_token = { };
     secrets.restic_repository_password = { };
   };
 
-  environment.systemPackages = with pkgs; [ git sops ];
+  environment.systemPackages = with pkgs; [
+    git
+    sops
+  ];
 }

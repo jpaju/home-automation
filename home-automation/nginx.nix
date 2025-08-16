@@ -1,45 +1,66 @@
-{ config, lib, ... }: {
-  networking.firewall.allowedTCPPorts = [ 80 443 63719 ];
+{ config, lib, ... }:
+{
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+    63719
+  ];
 
   services.nginx = {
     enable = true;
 
-    virtualHosts = let
-      dockerUrl = "http://home-automation.int.jpaju.fi";
-      proxyTo = { backendUrl, allowInternetAccess ? false, port ? null }: {
-        locations."/" = {
-          proxyPass = backendUrl;
-          proxyWebsockets = true;
-          recommendedProxySettings = true;
+    virtualHosts =
+      let
+        dockerUrl = "http://home-automation.int.jpaju.fi";
+        proxyTo =
+          {
+            backendUrl,
+            allowInternetAccess ? false,
+            port ? null,
+          }:
+          {
+            locations."/" = {
+              proxyPass = backendUrl;
+              proxyWebsockets = true;
+              recommendedProxySettings = true;
+            };
+
+            listen = lib.optionals (port != null) [
+              {
+                addr = "0.0.0.0";
+                port = port;
+                ssl = true;
+              }
+            ];
+
+            forceSSL = true;
+            enableACME = true;
+            acmeRoot = null;
+
+            extraConfig =
+              if allowInternetAccess then
+                ""
+              else
+                ''
+                  allow 192.168.0.0/16;
+                  allow 10.0.0.0/8;
+                  allow 172.16.0.0/12;
+                  deny all;
+                '';
+          };
+      in
+      {
+        "hass.jpaju.fi" = proxyTo {
+          port = 63719;
+          backendUrl = "${dockerUrl}:8123";
+          allowInternetAccess = true;
         };
-
-        listen = lib.optionals (port != null) [ { addr = "0.0.0.0"; port = port; ssl = true; } ];
-
-        forceSSL = true;
-        enableACME = true;
-        acmeRoot = null;
-
-        extraConfig = if allowInternetAccess then
-          ""
-        else ''
-          allow 192.168.0.0/16;
-          allow 10.0.0.0/8;
-          allow 172.16.0.0/12;
-          deny all;
-        '';
+        "esphome.int.jpaju.fi" = proxyTo { backendUrl = "${dockerUrl}:6052"; };
+        "zigbee2mqtt.int.jpaju.fi" = proxyTo { backendUrl = "${dockerUrl}:8080"; };
+        "zwavejs.int.jpaju.fi" = proxyTo { backendUrl = "${dockerUrl}:8091"; };
+        "portainer.int.jpaju.fi" = proxyTo { backendUrl = "${dockerUrl}:9000"; };
+        "matter.int.jpaju.fi" = proxyTo { backendUrl = "${dockerUrl}:5580"; };
       };
-    in {
-      "hass.jpaju.fi" = proxyTo {
-        port = 63719;
-        backendUrl = "${dockerUrl}:8123";
-        allowInternetAccess = true;
-      };
-      "esphome.int.jpaju.fi" = proxyTo { backendUrl = "${dockerUrl}:6052"; };
-      "zigbee2mqtt.int.jpaju.fi" = proxyTo { backendUrl = "${dockerUrl}:8080"; };
-      "zwavejs.int.jpaju.fi" = proxyTo { backendUrl = "${dockerUrl}:8091"; };
-      "portainer.int.jpaju.fi" = proxyTo { backendUrl = "${dockerUrl}:9000"; };
-      "matter.int.jpaju.fi" = proxyTo { backendUrl = "${dockerUrl}:5580"; };
-    };
   };
 
   security.acme = {

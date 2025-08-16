@@ -1,4 +1,11 @@
-{ pkgs, dotfiles, username, userhome, ... }: {
+{
+  pkgs,
+  dotfiles,
+  username,
+  userhome,
+  ...
+}:
+{
   programs.home-manager.enable = true;
 
   home = {
@@ -7,10 +14,18 @@
     homeDirectory = userhome;
   };
 
-  imports = let
-    otherModules = [ ./secrets.nix ];
-    dotfilesModules = with dotfiles.homeModules; [ ai cli-tools dev-tools nix shell ];
-  in dotfilesModules ++ otherModules;
+  imports =
+    let
+      otherModules = [ ./secrets.nix ];
+      dotfilesModules = with dotfiles.homeModules; [
+        ai
+        cli-tools
+        dev-tools
+        nix
+        shell
+      ];
+    in
+    dotfilesModules ++ otherModules;
 
   home.packages = [ pkgs.mqttui ];
 }

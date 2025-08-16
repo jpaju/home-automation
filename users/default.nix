@@ -1,5 +1,6 @@
-{ ... }: {
-  imports = [ # Newline
+{ ... }:
+{
+  imports = [
     ./home-manager.nix
     ./user.nix
   ];

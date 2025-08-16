@@ -29,7 +29,7 @@ let
   };
   matter = {
     include = "/srv/matter";
-    exclude = [];
+    exclude = [ ];
   };
   portainer = {
     include = "/srv/portainer";
