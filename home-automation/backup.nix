@@ -31,6 +31,10 @@ let
     include = "/srv/matter";
     exclude = [ ];
   };
+  music-assistant = {
+    include = "/srv/music-assistant";
+    exclude = [ "/srv/music-assistant/.cache" ];
+  };
   portainer = {
     include = "/srv/portainer";
     exclude = [ "/srv/portainer/bin" ];
@@ -77,6 +81,7 @@ in
       home-assistant.include
       mosquitto.include
       matter.include
+      music-assistant.include
       portainer.include
       zigbee2mqtt.include
       zwavejs.include
@@ -87,6 +92,7 @@ in
       ++ home-assistant.exclude
       ++ mosquitto.exclude
       ++ matter.exclude
+      ++ music-assistant.exclude
       ++ portainer.exclude
       ++ zigbee2mqtt.exclude
       ++ zwavejs.exclude;

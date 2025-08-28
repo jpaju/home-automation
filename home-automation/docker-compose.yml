@@ -10,6 +10,17 @@ services:
     environment:
       - TZ=Europe/Helsinki
 
+  music-assistant:
+    container_name: music-assistant
+    image: ghcr.io/music-assistant/server:2.5.8
+    restart: on-failure
+    network_mode: host
+    volumes:
+      - /srv/music-assistant/:/data/
+    environment:
+      - TZ=Europe/Helsinki
+      - LOG_LEVEL=info
+
   esphome:
     container_name: esphome
     image: ghcr.io/esphome/esphome:2025.8.0
