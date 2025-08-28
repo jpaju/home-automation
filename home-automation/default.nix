@@ -2,7 +2,8 @@
 {
   imports = [
     ./nginx.nix
-    ./hass.nix
+    ./home-assistant.nix
+    ./music-assistant.nix
     ./backup.nix
   ];
 }

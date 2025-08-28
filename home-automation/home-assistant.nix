@@ -3,6 +3,7 @@
   networking.firewall =
     let
       mqtt = 1883;
+      mass = 8097; # Music assistant
       hass = 8123;
       ssdp = 1900;
       mdns = 5353;
@@ -11,6 +12,7 @@
     {
       allowedTCPPorts = [
         hass
+        mass
         mqtt
       ];
       allowedUDPPorts = [

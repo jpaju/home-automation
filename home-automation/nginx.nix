@@ -58,6 +58,7 @@
           backendUrl = "${dockerUrl}:8123";
           allowInternetAccess = true;
         };
+        "music-assistant.${internalDomain}" = proxyTo { backendUrl = "${dockerUrl}:8095"; };
         "esphome.${internalDomain}" = proxyTo { backendUrl = "${dockerUrl}:6052"; };
         "zigbee2mqtt.${internalDomain}" = proxyTo { backendUrl = "${dockerUrl}:8080"; };
         "zwavejs.${internalDomain}" = proxyTo { backendUrl = "${dockerUrl}:8091"; };
