@@ -64,6 +64,7 @@
         "zwavejs.${internalDomain}" = proxyTo { backendUrl = "${dockerUrl}:8091"; };
         "portainer.${internalDomain}" = proxyTo { backendUrl = "${dockerUrl}:9000"; };
         "matter.${internalDomain}" = proxyTo { backendUrl = "${dockerUrl}:5580"; };
+        "zone-configurator.${internalDomain}" = proxyTo { backendUrl = "${dockerUrl}:8099"; };
       };
   };
 

@@ -17,6 +17,7 @@
     };
     secrets.cloudflare_api_token = { };
     secrets.restic_repository_password = { };
+    secrets."hass.env" = { };
   };
 
   environment.systemPackages = with pkgs; [

@@ -8,12 +8,14 @@
       ssdp = 1900;
       mdns = 5353;
       coap = 5683; # Shelly CoIoT
+      zoneConfigurator = 8099;
     in
     {
       allowedTCPPorts = [
         hass
         mass
         mqtt
+        zoneConfigurator
       ];
       allowedUDPPorts = [
         ssdp

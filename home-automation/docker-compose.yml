@@ -98,3 +98,15 @@ services:
       - /srv/matter:/data/
     environment:
       - TZ=Europe/Helsinki
+
+  everything-presence-zone-configurator:
+    container_name: everything-presence-zone-configurator
+    image: everythingsmarthome/everything-presence-mmwave-configurator:1.2.2
+    restart: on-failure
+    ports:
+      - 8099:8099
+    environment:
+      - HA_URL=https://hass.jpaju.fi:63719
+    env_file:
+      - path: /run/secrets/hass.env
+        required: true
