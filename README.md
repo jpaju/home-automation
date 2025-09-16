@@ -1,7 +1,7 @@
 # NixOS home automation
 
-This repository contains [NixOS](https://nixos.org/) system for home automation services with [Home Assistant](https://www.home-assistant.io/),
-[Zigbee2MQTT](https://www.zigbee2mqtt.io/), [Z-Wave JS UI](https://github.com/zwave-js/zwave-js-ui), and [ESPHome](https://esphome.io/) running in Docker containers.
+This repository contains [NixOS](https://nixos.org/) system that hosts for home automation services
+based on [Home Assistant](https://www.home-assistant.io/).
 
 ## Architecture
 
@@ -12,6 +12,7 @@ This system uses a hybrid approach combining NixOS for system-level configuratio
 - **Data persistence** is handled by mounting `/srv/` directories from host to containers
 - **Systemd** manages the Docker Compose stack as a single service unit
 - **Nginx** provides SSL termination and reverse proxy to containers
+- **Restic** handles automated backups of persistent data to remote storage
 
 ## External configuration
 
@@ -19,19 +20,26 @@ Configuration required outside of this repository on routers, network devices, a
 
 ### DNS and port forwarding
 
-To access home automation services from outside the network, configure DNS and port forwarding as follows:
+The system provides both internal (local network) and external (internet) access to services:
+Internal services can only be accessed from local networks (192.168.0.0/16, 10.0.0.0/8, 172.16.0.0/12).
+Only Home Assistant is accessible externally (from public internet).
 
 **Traffic flow**: Internet/local network → router → nginx → docker containers (Home assistant, Zigbee2MQTT, etc.)
 
-1. **DNS Configuration**: Point all domain names ending with `int.jpaju.fi` to this NixOS host.
+#### Internal access (local network only)
+
+1. **DNS Configuration**: Point all domain names ending with `<internal-domain>` to this NixOS host IP.
    The specific domain names can be found in the `nginx.nix` file.
    Create an A record for one domain and use CNAME records for others, for example:
+   - A record: `home-automation.<internal-domain>` → `<NixOS-host-IP>`
+   - CNAME record(s): `zigbee.<internal-domain>` → `home-automation.<internal-domain>`
 
-   - A record: `home-automation.int.jpaju.fi` → `<NixOS-host-IP>`
-   - CNAME record(s): `zigbee.int.jpaju.fi` → `home-automation.int.jpaju.fi`
+#### External access (internet)
 
-2. **Port Forwarding**: The domain `hass.jpaju.fi` points to router public IP via dynDNS.
-   Configure router to forward traffic from ports 80 and 443 to the nginx service on this NixOS host.
+2. **DNS Configuration**: The domain `hass.<external-domain>` should point to your router's public IP via dynamic DNS.
+
+3. **Port Forwarding**: Configure your router to forward port 63719 to this NixOS host:
+   - Port 63719 (HTTPS) → nginx service (used by `hass.<external-domain>`)
 
 ### Zigbee adapter serial over network
 
@@ -50,7 +58,7 @@ The docker configuration expects the Z-Wave USB device to be available at `/dev/
 2. Ensure the USB device appears in the guest at the expected path
 3. Verify device permissions allow the docker container to access it
 
-### Synology SFTP setup
+### Synology NAS SFTP setup
 
 Restic requires non-interactive SFTP login for automated backups. Therefore, public key authentication must be configured.
 
@@ -95,6 +103,27 @@ If you need to manually restart the services, you can use:
 systemctl restart home-automation
 ```
 
+### Updating versions
+
+When updated versions of home automation services are available:
+
+1. Renovate automatically creates PRs to update image versions in the `docker-compose.yml` file
+2. After merging update PRs, pull the changes locally:
+   ```bash
+   git pull
+   ```
+3. Optionally, pre-download the updated Docker images:
+   ```bash
+   cd home-automation
+   docker compose pull
+   ```
+4. Apply the new versions by reloading the service:
+   ```bash
+   systemctl reload home-automation
+   ```
+
+This will pull the updated Docker images and recreate the containers with the new versions.
+
 ### Data persistence
 
 Necessary state from the docker containers is stored in the `/srv/` folder on the host system.
@@ -112,22 +141,6 @@ To view logs from the home-automation service:
 # View recent logs in real-time
 journalctl --unit home-automation --limit=50 --follow
 ```
-
-### Updating versions
-
-This repository uses docker compose to run home automation services. When version updates occur:
-
-1. Renovate automatically creates PRs to update versions in the `docker-compose.yml` file
-2. After merging updates, pull the changes to your local repository:
-   ```bash
-   git pull
-   ```
-3. Apply the new versions by reloading the service:
-   ```bash
-   systemctl reload home-automation
-   ```
-
-This will pull the updated Docker images and recreate the containers with the new versions.
 
 ## Secrets management
 
