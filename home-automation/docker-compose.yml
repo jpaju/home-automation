@@ -110,3 +110,34 @@ services:
     env_file:
       - path: /run/secrets/hass.env
         required: true
+
+  homeassistant-piper: # Text-to-speech
+    container_name: homeassistant-piper
+    image: rhasspy/wyoming-piper:1.6.3
+    restart: on-failure
+    command: "--voice en-us-ryan-low"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /srv/piper:/data
+    ports:
+      - "10200:10200"
+
+  homeassistant-whisper: # Speech-to-text
+    container_name: homeassistant-whisper
+    image: rhasspy/wyoming-whisper:2.5.0
+    restart: on-failure
+    command: "--model base-int8 --language en"
+    volumes:
+      - /srv/whisper:/data
+    ports:
+      - "10300:10300"
+
+  homeassistant-openwakeword:
+    container_name: homeassistant-openwakeword
+    image: rhasspy/wyoming-openwakeword:1.10.0
+    restart: on-failure
+    command: "--preload-model ok_nabu"
+    volumes:
+      - /srv/openwakeword:/data
+    ports:
+      - "10400:10400"
