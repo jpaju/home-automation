@@ -41,7 +41,11 @@
 
   virtualisation.docker.enable = true;
   virtualisation.docker.autoPrune.enable = true;
-  virtualisation.docker.autoPrune.flags = [ ''--filter "until=720h"'' ]; # 1 week
+  virtualisation.docker.autoPrune.flags = [
+    "--all"
+    "--filter"
+    "until=720h" # 1 week
+  ];
 
   systemd.services.home-automation = {
     enable = true;
