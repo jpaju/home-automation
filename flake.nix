@@ -46,6 +46,7 @@
           ./system
           ./users
           ./home-automation
+          ./media
         ];
       };
     };
