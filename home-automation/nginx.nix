@@ -13,7 +13,6 @@
       let
         externalDomain = "jpaju.fi";
         internalDomain = "int.jpaju.fi";
-        dockerUrl = "http://home-automation.${internalDomain}";
 
         proxyTo =
           {
@@ -55,16 +54,15 @@
       {
         "hass.${externalDomain}" = proxyTo {
           port = 63719;
-          backendUrl = "${dockerUrl}:8123";
+          backendUrl = "http://localhost:8123";
           allowInternetAccess = true;
         };
-        "music-assistant.${internalDomain}" = proxyTo { backendUrl = "${dockerUrl}:8095"; };
-        "esphome.${internalDomain}" = proxyTo { backendUrl = "${dockerUrl}:6052"; };
-        "zigbee2mqtt.${internalDomain}" = proxyTo { backendUrl = "${dockerUrl}:8080"; };
-        "zwavejs.${internalDomain}" = proxyTo { backendUrl = "${dockerUrl}:8091"; };
-        "portainer.${internalDomain}" = proxyTo { backendUrl = "${dockerUrl}:9000"; };
-        "matter.${internalDomain}" = proxyTo { backendUrl = "${dockerUrl}:5580"; };
-        "zone-configurator.${internalDomain}" = proxyTo { backendUrl = "${dockerUrl}:8099"; };
+        "esphome.${internalDomain}" = proxyTo { backendUrl = "http://localhost:6052"; };
+        "zigbee2mqtt.${internalDomain}" = proxyTo { backendUrl = "http://localhost:8080"; };
+        "zwavejs.${internalDomain}" = proxyTo { backendUrl = "http://localhost:8091"; };
+        "portainer.${internalDomain}" = proxyTo { backendUrl = "http://localhost:9000"; };
+        "matter.${internalDomain}" = proxyTo { backendUrl = "http://localhost:5580"; };
+        "zone-configurator.${internalDomain}" = proxyTo { backendUrl = "http://localhost:8099"; };
       };
   };
 

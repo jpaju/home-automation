@@ -3,7 +3,6 @@
   networking.firewall =
     let
       mqtt = 1883;
-      mass = 8097; # Music assistant
       hass = 8123;
       ssdp = 1900;
       mdns = 5353;
@@ -13,7 +12,6 @@
     {
       allowedTCPPorts = [
         hass
-        mass
         mqtt
         zoneConfigurator
       ];
@@ -24,14 +22,10 @@
       ];
     };
 
-  systemd.tmpfiles.settings."10-hass" = {
-    "/srv" = {
-      d = {
-        user = "root";
-        group = "wheel";
-        mode = "0774";
-      };
-    };
+  systemd.tmpfiles.settings."10-hass"."/srv".d = {
+    user = "root";
+    group = "wheel";
+    mode = "0774";
   };
 
   environment.systemPackages = [
