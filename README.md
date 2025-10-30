@@ -92,6 +92,37 @@ nixos-rebuild list-generations
 sudo /nix/var/nix/profiles/system-N-link/bin/switch-to-configuration switch
 ```
 
+### SSL certificate renewal issues
+
+If ACME certificates fail to renew due to account mismatch errors:
+
+1. Backup and remove the acme directory:
+   ```bash
+   sudo mv /var/lib/acme /var/lib/acme_backup
+   ```
+
+2. Regenerate certificate infrastructure:
+   ```bash
+   sudo systemctl restart acme-setup.service
+   ```
+
+3. Generate fresh certificates for all domains:
+   ```bash
+   for domain in hass.jpaju.fi esphome.int.jpaju.fi zigbee2mqtt.int.jpaju.fi zwavejs.int.jpaju.fi portainer.int.jpaju.fi matter.int.jpaju.fi zone-configurator.int.jpaju.fi; do
+     sudo systemctl start acme-$domain.service
+   done
+   ```
+
+4. Verify all certificates are created (each takes ~10 seconds):
+   ```bash
+   ls /var/lib/acme/*/fullchain.pem
+   ```
+
+5. Reload nginx:
+   ```bash
+   sudo systemctl reload nginx.service
+   ```
+
 ## Home automation services
 
 ### Services startup
