@@ -12,9 +12,9 @@
     defaultSopsFormat = "yaml";
     age.keyFile = "/etc/sops/age/keys.txt";
 
-    secrets.anthropic_api_key = {
-      owner = username;
-    };
+    secrets.anthropic_api_key.owner = username;
+    secrets.openai_api_key.owner = username;
+
     secrets.cloudflare_api_token = { };
     secrets.restic_repository_password = { };
     secrets."hass.env" = { };
