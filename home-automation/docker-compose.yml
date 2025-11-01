@@ -123,7 +123,7 @@ services:
 
   homeassistant-openwakeword:
     container_name: homeassistant-openwakeword
-    image: rhasspy/wyoming-openwakeword:2.0.0
+    image: rhasspy/wyoming-openwakeword:2.1.0
     restart: on-failure
     command: "--preload-model ok_nabu"
     volumes:
