@@ -113,7 +113,7 @@ services:
 
   homeassistant-whisper: # Speech-to-text
     container_name: homeassistant-whisper
-    image: rhasspy/wyoming-whisper:2.5.0
+    image: rhasspy/wyoming-whisper:3.0.1
     restart: on-failure
     command: "--model base-int8 --language en"
     volumes:
