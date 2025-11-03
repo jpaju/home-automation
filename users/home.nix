@@ -3,13 +3,14 @@
   dotfiles,
   username,
   userhome,
+  homeStateVersion,
   ...
 }:
 {
   programs.home-manager.enable = true;
 
   home = {
-    stateVersion = "25.05";
+    stateVersion = homeStateVersion;
     username = username;
     homeDirectory = userhome;
   };

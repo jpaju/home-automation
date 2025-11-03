@@ -33,9 +33,21 @@
       username = "jaakko";
       userhome = "/home/${username}";
 
+      # DO NOT CHANGE THESE
+      homeStateVersion = "25.05";
+      systemStateVersion = "24.11";
+
       specialArgs = {
-        inherit home-manager sops-nix dotfiles;
-        inherit system username userhome;
+        inherit
+          home-manager
+          sops-nix
+          dotfiles
+          system
+          username
+          userhome
+          homeStateVersion
+          systemStateVersion
+          ;
       };
     in
     {

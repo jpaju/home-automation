@@ -5,16 +5,25 @@
   dotfiles,
   username,
   userhome,
+  homeStateVersion,
   config,
   ...
 }:
 let
-  specialArgs = {
-    inherit home-manager sops-nix dotfiles;
-    inherit system username userhome;
-    systemSops = config.sops;
+  fishUtils = import "${dotfiles}/util/fish.nix";
 
-    fishUtils = dotfiles.homeModules.fishUtils;
+  specialArgs = {
+    inherit
+      home-manager
+      sops-nix
+      system
+      username
+      userhome
+      homeStateVersion
+      fishUtils
+      ;
+
+    systemSops = config.sops;
     helix = dotfiles.inputs.helix;
     catppuccin = dotfiles.inputs.catppuccin;
   };
