@@ -1,5 +1,4 @@
 {
-  pkgs,
   dotfiles,
   username,
   userhome,
@@ -15,18 +14,9 @@
     homeDirectory = userhome;
   };
 
-  imports =
-    let
-      otherModules = [ ./secrets.nix ];
-      dotfilesModules = with dotfiles.homeModules; [
-        ai
-        cli-tools
-        dev-tools
-        nix
-        shell
-      ];
-    in
-    dotfilesModules ++ otherModules;
-
-  home.packages = [ pkgs.mqttui ];
+  imports = [
+    ./secrets.nix
+    dotfiles.exports.options
+    dotfiles.exports.home
+  ];
 }

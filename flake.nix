@@ -55,6 +55,8 @@
         inherit system specialArgs;
 
         modules = [
+          dotfiles.exports.options
+          ./profile.nix
           ./system
           ./users
           ./home-automation

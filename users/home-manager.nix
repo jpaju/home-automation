@@ -1,8 +1,8 @@
 {
-  system,
   home-manager,
   sops-nix,
   dotfiles,
+  system,
   username,
   userhome,
   homeStateVersion,
@@ -16,6 +16,7 @@ let
     inherit
       home-manager
       sops-nix
+      dotfiles
       system
       username
       userhome
@@ -36,7 +37,10 @@ in
       home-manager.useUserPackages = true;
       home-manager.extraSpecialArgs = specialArgs;
       home-manager.backupFileExtension = "bak";
-      home-manager.users.${username} = import ./home.nix;
+      home-manager.users.${username} = {
+        dotfiles = config.dotfiles;
+        imports = [ ./home.nix ];
+      };
     }
   ];
 
