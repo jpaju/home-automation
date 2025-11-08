@@ -102,7 +102,7 @@ services:
 
   homeassistant-piper: # Text-to-speech
     container_name: homeassistant-piper
-    image: rhasspy/wyoming-piper:1.6.3
+    image: rhasspy/wyoming-piper:2.1.2
     restart: on-failure
     command: "--voice en-us-ryan-low"
     volumes:
