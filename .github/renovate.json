@@ -8,5 +8,6 @@
 
   "automerge": false,
   "reviewers": ["jpaju"],
-  "semanticCommits": "disabled"
+  "semanticCommits": "disabled",
+  "commitMessageAction": "update:"
 }
