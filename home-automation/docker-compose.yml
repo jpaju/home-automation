@@ -88,14 +88,14 @@ services:
     environment:
       - TZ=Europe/Helsinki
 
-  everything-presence-zone-configurator:
+  ep-zone-configurator:
     container_name: everything-presence-zone-configurator
-    image: everythingsmarthome/everything-presence-mmwave-configurator:1.2.2
+    image: everythingsmarthome/everything-presence-mmwave-configurator:2.0.3
     restart: on-failure
+    volumes:
+      - /srv/ep-zone-configurator:/config
     ports:
-      - 8099:8099
-    environment:
-      - HA_URL=https://hass.jpaju.fi:63719
+      - 8099:3000
     env_file:
       - path: /run/secrets/hass.env
         required: true
