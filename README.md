@@ -97,16 +97,19 @@ sudo /nix/var/nix/profiles/system-N-link/bin/switch-to-configuration switch
 If ACME certificates fail to renew due to account mismatch errors:
 
 1. Backup and remove the acme directory:
+
    ```bash
    sudo mv /var/lib/acme /var/lib/acme_backup
    ```
 
 2. Regenerate certificate infrastructure:
+
    ```bash
    sudo systemctl restart acme-setup.service
    ```
 
 3. Generate fresh certificates for all domains:
+
    ```bash
    for domain in hass.jpaju.fi esphome.int.jpaju.fi zigbee2mqtt.int.jpaju.fi zwavejs.int.jpaju.fi portainer.int.jpaju.fi matter.int.jpaju.fi zone-configurator.int.jpaju.fi; do
      sudo systemctl start acme-$domain.service
@@ -114,6 +117,7 @@ If ACME certificates fail to renew due to account mismatch errors:
    ```
 
 4. Verify all certificates are created (each takes ~10 seconds):
+
    ```bash
    ls /var/lib/acme/*/fullchain.pem
    ```
@@ -163,6 +167,17 @@ Subfolders like `/srv/home-assistant/` and `/srv/zigbee2mqtt/` are mounted to th
 ### Backups
 
 We use Restic for backups, which automatically backs up files from the `/srv` folder to a local NAS each day.
+
+#### Recovering file from backups
+
+Use these steps to recover file(s) from backups without overwriting current files.
+
+1. List available snapshots and note the latest snapshot ID:
+   `sudo restic-home-automation snapshots`
+2. Locate the filepath inside the snapshot:
+   `sudo restic-home-automation ls <SNAPSHOT_ID> | grep <FILE_NAME>`
+3. Dump the file from the backup to a local path:
+   `sudo restic-home-automation dump <SNAPSHOT_ID> <FILE_PATH_IN_BACKUP> > <PATH_TO_RESTORED_FILE>`
 
 ### Viewing logs
 
