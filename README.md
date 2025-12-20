@@ -111,7 +111,7 @@ If ACME certificates fail to renew due to account mismatch errors:
 3. Generate fresh certificates for all domains:
 
    ```bash
-   for domain in hass.jpaju.fi esphome.int.jpaju.fi zigbee2mqtt.int.jpaju.fi zwavejs.int.jpaju.fi portainer.int.jpaju.fi matter.int.jpaju.fi zone-configurator.int.jpaju.fi; do
+   for domain in hass.jpaju.fi esphome.int.jpaju.fi <other-domains>; do
      sudo systemctl start acme-$domain.service
    done
    ```

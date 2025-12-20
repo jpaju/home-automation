@@ -18,9 +18,9 @@ services:
     volumes:
       - /srv/esphome/config:/config
       - /etc/localtime:/etc/localtime:ro
-    environment:
-      - USERNAME=esphome
-      - PASSWORD=xIPbmtiX9rFH5vrkIkQT
+    env_file:
+      - path: /run/secrets/esphome.env
+        required: true
 
   mosquitto:
     container_name: mosquitto
