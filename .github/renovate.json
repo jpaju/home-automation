@@ -1,13 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
-
-  "timezone": "Europe/Helsinki",
-  "schedule": ["* * * * 6,0"],
-  "prHourlyLimit": 10,
-
-  "automerge": false,
-  "reviewers": ["jpaju"],
-  "semanticCommits": "disabled",
-  "commitMessageAction": "update:"
+  "extends": [
+    "github>jpaju/gh-commons//renovate/default"
+  ]
 }
