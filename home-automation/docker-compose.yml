@@ -90,7 +90,7 @@ services:
 
   ep-zone-configurator:
     container_name: everything-presence-zone-configurator
-    image: everythingsmarthome/everything-presence-mmwave-configurator:2.0.7
+    image: everythingsmarthome/everything-presence-mmwave-configurator:2.0.9
     restart: on-failure
     volumes:
       - /srv/ep-zone-configurator:/config
