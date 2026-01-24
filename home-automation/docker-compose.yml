@@ -90,12 +90,12 @@ services:
 
   ep-zone-configurator:
     container_name: everything-presence-zone-configurator
-    image: everythingsmarthome/everything-presence-mmwave-configurator:2.0.9
+    image: everythingsmarthome/everything-presence-mmwave-configurator:2.0.11
     restart: on-failure
     volumes:
       - /srv/ep-zone-configurator:/config
     ports:
-      - 8099:3000
+      - 8099:42069
     env_file:
       - path: /run/secrets/hass.env
         required: true
