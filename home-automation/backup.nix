@@ -3,6 +3,10 @@ let
   repository = "sftp:home-automation@jp-nas1.int.jpaju.fi:/Backupit/home-automation";
   passwordFile = config.sops.secrets.restic_repository_password.path;
 
+  ep-zone-configurator = {
+    include = "/srv/ep-zone-configurator";
+    exclude = [ ];
+  };
   esphome = {
     include = "/srv/esphome";
     exclude = [
@@ -47,6 +51,17 @@ let
       "/srv/zwavejs/*.lock"
     ];
   };
+
+  services = [
+    ep-zone-configurator
+    esphome
+    home-assistant
+    mosquitto
+    matter
+    portainer
+    zigbee2mqtt
+    zwavejs
+  ];
 in
 {
   services.restic.backups.home-automation = {
@@ -54,10 +69,12 @@ in
 
     # TODO Notification if backup fails
 
+    paths = map (s: s.include) services;
+    exclude = builtins.concatLists (map (s: s.exclude) services);
+
     initialize = true;
     createWrapper = true;
     runCheck = true;
-
     extraBackupArgs = [ "--verbose" ];
 
     timerConfig = {
@@ -71,24 +88,5 @@ in
       "--keep-monthly 12"
       "--keep-yearly 5"
     ];
-
-    paths = [
-      esphome.include
-      home-assistant.include
-      mosquitto.include
-      matter.include
-      portainer.include
-      zigbee2mqtt.include
-      zwavejs.include
-    ];
-
-    exclude =
-      esphome.exclude
-      ++ home-assistant.exclude
-      ++ mosquitto.exclude
-      ++ matter.exclude
-      ++ portainer.exclude
-      ++ zigbee2mqtt.exclude
-      ++ zwavejs.exclude;
   };
 }
