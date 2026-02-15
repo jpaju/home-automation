@@ -96,6 +96,10 @@ services:
       - /srv/ep-zone-configurator:/config
     ports:
       - 8099:42069
+      - 38080:38080
+    environment:
+      APP_PORT: 42069
+      FIRMWARE_LAN_PORT: 38080
     env_file:
       - path: /run/secrets/hass.env
         required: true
