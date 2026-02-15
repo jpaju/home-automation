@@ -5,7 +5,10 @@
   services.openssh = {
     enable = true;
     settings.PermitRootLogin = "no";
-    settings.AcceptEnv = "TERM COLORTERM";
+    settings.AcceptEnv = [
+      "TERM"
+      "COLORTERM"
+    ];
   };
 
   users.users."${username}".openssh.authorizedKeys.keys = [
