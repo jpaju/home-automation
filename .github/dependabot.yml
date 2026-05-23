@@ -8,6 +8,8 @@ updates:
       timezone: "Europe/Helsinki"
     commit-message:
       prefix: "update"
+    assignees:
+      - jpaju
     groups:
       nix-flake-inputs:
         patterns:
