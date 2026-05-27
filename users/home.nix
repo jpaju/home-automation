@@ -1,5 +1,5 @@
 {
-  dotfiles,
+  inputs,
   username,
   userhome,
   homeStateVersion,
@@ -16,7 +16,7 @@
 
   imports = [
     ./secrets.nix
-    dotfiles.exports.options
-    dotfiles.exports.home
+    inputs.dotfiles.exports.options
+    inputs.dotfiles.exports.home
   ];
 }

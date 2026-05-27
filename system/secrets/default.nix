@@ -1,11 +1,11 @@
 {
   pkgs,
-  sops-nix,
   username,
+  inputs,
   ...
 }:
 {
-  imports = [ sops-nix.nixosModules.sops ];
+  imports = [ inputs.sops-nix.nixosModules.sops ];
 
   sops = {
     defaultSopsFile = ./secrets.yaml;

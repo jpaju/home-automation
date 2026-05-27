@@ -21,13 +21,7 @@
   };
 
   outputs =
-    {
-      nixpkgs,
-      home-manager,
-      sops-nix,
-      dotfiles,
-      ...
-    }:
+    inputs@{ nixpkgs, ... }:
     let
       system = "x86_64-linux";
       username = "jaakko";
@@ -39,9 +33,7 @@
 
       specialArgs = {
         inherit
-          home-manager
-          sops-nix
-          dotfiles
+          inputs
           system
           username
           userhome
@@ -55,7 +47,7 @@
         inherit system specialArgs;
 
         modules = [
-          dotfiles.exports.options
+          inputs.dotfiles.exports.options
           ./profile.nix
           ./system
           ./users

@@ -1,7 +1,8 @@
-{ dotfiles, ... }:
+{ inputs, ... }:
 {
   imports = [
-    dotfiles.systemModules.nix-settings
+    inputs.dotfiles.systemModules.nix-settings
+    inputs.dotfiles.inputs.determinate.nixosModules.default
     ./configuration.nix
     ./hardware-configuration.nix
     ./secrets
