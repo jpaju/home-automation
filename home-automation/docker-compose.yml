@@ -80,13 +80,17 @@ services:
 
   matter-server:
     container_name: matter-server
-    image: ghcr.io/home-assistant-libs/python-matter-server:8.1.0
+    image: ghcr.io/matter-js/matterjs-server:0.8.0
     restart: on-failure
     network_mode: host
     volumes:
       - /srv/matter:/data/
     environment:
+      - LOG_LEVEL=info
+      - STORAGE_PATH=/data
       - TZ=Europe/Helsinki
+      - BLE_PROXY=true
+      - PRODUCTION_MODE=true
 
   ep-zone-configurator:
     container_name: everything-presence-zone-configurator
