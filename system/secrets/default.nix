@@ -21,6 +21,8 @@
     secrets.restic_repository_password = { };
     secrets."hass.env" = { };
     secrets."esphome.env" = { };
+    secrets.hass_server = { };
+    secrets.hass_token = { };
   };
 
   environment.systemPackages = with pkgs; [
