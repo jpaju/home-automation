@@ -6,6 +6,9 @@ updates:
       interval: "cron"
       cronjob: "0 0 * */2 6"
       timezone: "Europe/Helsinki"
+    cooldown:
+      exclude:
+        - "*"
     commit-message:
       prefix: "update"
     assignees:
