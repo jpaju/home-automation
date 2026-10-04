@@ -5,6 +5,7 @@
   userhome,
   homeStateVersion,
   config,
+  pkgs,
   ...
 }:
 let
@@ -14,6 +15,7 @@ let
 
   specialArgs = {
     inputs = homeInputs;
+    localPkgs = import "${inputs.dotfiles}/packages" { inherit pkgs; };
     inherit
       system
       username

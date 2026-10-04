@@ -1,5 +1,7 @@
 {
   inputs,
+  lib,
+  system,
   username,
   userhome,
   homeStateVersion,
@@ -7,6 +9,12 @@
 }:
 {
   programs.home-manager.enable = true;
+
+  programs.helix.package = lib.mkForce (
+    inputs.helix.packages.${system}.default.override {
+      includeGrammarIf = grammar: grammar.name != "perl";
+    }
+  );
 
   home = {
     stateVersion = homeStateVersion;

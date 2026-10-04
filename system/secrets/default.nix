@@ -17,12 +17,13 @@
     secrets.google_generative_ai_api_key.owner = username;
     secrets.context7_api_key.owner = username;
 
-    secrets.cloudflare_api_token = { };
-    secrets.restic_repository_password = { };
     secrets."hass.env" = { };
     secrets."esphome.env" = { };
-    secrets.hass_server = { };
-    secrets.hass_token = { };
+    secrets.hass_server.owner = username;
+    secrets.hass_token.owner = username;
+
+    secrets.cloudflare_api_token = { };
+    secrets.restic_repository_password = { };
   };
 
   environment.systemPackages = with pkgs; [

@@ -146,11 +146,11 @@
         "sops-nix": "sops-nix"
       },
       "locked": {
-        "lastModified": 1791010418,
-        "narHash": "sha256-ebWP4rww8btUj6y4V2b0IX6yrbFudJ0rfEL2inXwptQ=",
+        "lastModified": 1791751552,
+        "narHash": "sha256-KFZAZB56h0TIHoFTyz6yX4pArZxQOZD3deZxFE/lZCw=",
         "owner": "jpaju",
         "repo": "dotfiles",
-        "rev": "bbbed48f95619fb5a56dda670751edef50288e8e",
+        "rev": "f35442f23ae871750ae4b3f088f0d67c79113134",
         "type": "github"
       },
       "original": {
