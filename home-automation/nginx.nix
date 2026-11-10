@@ -72,6 +72,7 @@
     defaults = {
       email = "jpaju.admin+acme@icloud.com";
       dnsProvider = "cloudflare";
+      extraLegoFlags = [ "--dns.propagation.disable-rns" ];
       credentialFiles.CF_DNS_API_TOKEN_FILE = config.sops.secrets."cloudflare_api_token".path;
     };
   };
