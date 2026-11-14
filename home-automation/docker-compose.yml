@@ -66,18 +66,6 @@ services:
     devices:
       - '/dev/serial/by-id/usb-Zooz_800_Z-Wave_Stick_533D004242-if00:/dev/zwave'
 
-  portainer:
-    container_name: portainer
-    image: portainer/portainer-ce:2.45.3-alpine
-    restart: on-failure
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /srv/portainer:/data
-    ports:
-      - 9000:9000
-    environment:
-      - TZ=Europe/Helsinki
-
   matter-server:
     container_name: matter-server
     image: ghcr.io/matter-js/matterjs-server:1.5.5
@@ -91,6 +79,18 @@ services:
       - TZ=Europe/Helsinki
       - BLE_PROXY=true
       - PRODUCTION_MODE=true
+
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:2.45.3-alpine
+    restart: on-failure
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /srv/portainer:/data
+    ports:
+      - 9000:9000
+    environment:
+      - TZ=Europe/Helsinki
 
   ep-zone-configurator:
     container_name: everything-presence-zone-configurator
@@ -107,3 +107,17 @@ services:
     env_file:
       - path: /run/secrets/hass.env
         required: true
+
+  nut:
+    container_name: nut
+    image: instantlinux/nut-upsd:2.8.5-r1
+    restart: on-failure
+    init: true
+    ports:
+      - "127.0.0.1:3493:3493"
+    environment:
+      NUT_CONFPATH: /etc/nut
+      NUT_STATEPATH: /run/nut
+      NUT_ALTPIDPATH: /run/nut
+    volumes:
+      - /srv/nut:/etc/nut

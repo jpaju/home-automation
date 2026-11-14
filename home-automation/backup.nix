@@ -3,10 +3,15 @@ let
   repository = "sftp:home-automation@jp-nas1.int.jpaju.fi:/Backupit/home-automation";
   passwordFile = config.sops.secrets.restic_repository_password.path;
 
-  ep-zone-configurator = {
-    include = "/srv/ep-zone-configurator";
-    exclude = [ ];
+  home-assistant = {
+    include = "/srv/home-assistant";
+    exclude = [
+      "/srv/home-assistant/config/backups"
+      "/srv/home-assistant/config/custom_components"
+      "/srv/home-assistant/config/tts"
+    ];
   };
+
   esphome = {
     include = "/srv/esphome";
     exclude = [
@@ -19,30 +24,17 @@ let
       "/srv/esphome/config/.esphome/platformio"
     ];
   };
-  home-assistant = {
-    include = "/srv/home-assistant";
-    exclude = [
-      "/srv/home-assistant/config/backups"
-      "/srv/home-assistant/config/custom_components"
-      "/srv/home-assistant/config/tts"
-    ];
-  };
+
   mosquitto = {
     include = "/srv/mosquitto";
     exclude = [ "/srv/mosquitto/log/mosquitto.log" ];
   };
-  matter = {
-    include = "/srv/matter";
-    exclude = [ ];
-  };
-  portainer = {
-    include = "/srv/portainer";
-    exclude = [ "/srv/portainer/bin" ];
-  };
+
   zigbee2mqtt = {
     include = "/srv/zigbee2mqtt";
     exclude = [ "/srv/zigbee2mqtt/data/log" ];
   };
+
   zwavejs = {
     include = "/srv/zwavejs";
     exclude = [
@@ -52,15 +44,36 @@ let
     ];
   };
 
+  matter = {
+    include = "/srv/matter";
+    exclude = [ ];
+  };
+
+  portainer = {
+    include = "/srv/portainer";
+    exclude = [ "/srv/portainer/bin" ];
+  };
+
+  ep-zone-configurator = {
+    include = "/srv/ep-zone-configurator";
+    exclude = [ ];
+  };
+
+  nut = {
+    include = "/srv/nut";
+    exclude = [ ];
+  };
+
   services = [
-    ep-zone-configurator
-    esphome
     home-assistant
+    esphome
     mosquitto
-    matter
-    portainer
     zigbee2mqtt
     zwavejs
+    matter
+    portainer
+    ep-zone-configurator
+    nut
   ];
 in
 {
