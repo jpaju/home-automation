@@ -18,6 +18,8 @@
       url = "github:jpaju/dotfiles/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    rex.url = "https://pkgs.superlogical.com/rex/nix/preview.tar.gz";
   };
 
   outputs =
